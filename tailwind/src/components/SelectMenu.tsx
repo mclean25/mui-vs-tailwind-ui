@@ -1,35 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
+import SelectMenuItem from "./SelectMenuItems";
 
-interface SelectChoice {
+export interface SelectChoice {
   display: string;
   id: string;
 }
 
-interface SelectMenuItemProps {
-  choice: SelectChoice;
-  onSelectChoice: (choice: SelectChoice) => void;
+interface SelectMenuProps {
+  choices: SelectChoice[];
 }
 
-const SelectMenuItem: React.FC<SelectMenuItemProps> = ({
-  choice,
-  onSelectChoice,
-}) => {
-  return (
-    <li
-      id={choice.id}
-      className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9"
-    >
-      <span
-        className="font-normal block truncate"
-        onClick={() => onSelectChoice(choice)}
-      >
-        {choice.display}
-      </span>
-    </li>
-  );
-};
-
-const DropdownMenu: React.FC = () => {
+const SelectMenu: React.FC<SelectMenuProps> = ({ choices }) => {
   const [selectedChoice, setSelectedChoice] = useState<
     SelectChoice | undefined
   >(undefined);
@@ -48,7 +29,7 @@ const DropdownMenu: React.FC = () => {
     }
     document.addEventListener("mousedown", handleMouseDown);
     return () => {
-      // Unbind the event listener on clean up1`
+      // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleMouseDown);
     };
   }, [selectMenuNode]);
@@ -58,13 +39,22 @@ const DropdownMenu: React.FC = () => {
     setShowDropdown(false);
   };
 
+  const selectMenuItems = choices.map((value) => {
+    return (
+      <SelectMenuItem
+        choice={{ display: value.display, id: value.id }}
+        onSelectChoice={onSelectChoice}
+      />
+    );
+  });
+
   return (
     <div ref={selectMenuNode}>
       <label
         id="listbox-label"
         className="block text-sm font-medium text-gray-700"
       >
-        Assigned to
+        Designer
       </label>
       <div className="mt-1 relative">
         <button
@@ -104,10 +94,7 @@ const DropdownMenu: React.FC = () => {
               aria-activedescendant="listbox-item-3"
               className="max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
             >
-              <SelectMenuItem
-                choice={{ display: "Hello", id: "hello" }}
-                onSelectChoice={onSelectChoice}
-              />
+              {selectMenuItems}
             </ul>
           </div>
         )}
@@ -116,4 +103,4 @@ const DropdownMenu: React.FC = () => {
   );
 };
 
-export default DropdownMenu;
+export default SelectMenu;
