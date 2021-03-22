@@ -48,6 +48,9 @@ const SelectMenu: React.FC<SelectMenuProps> = ({ choices }) => {
     );
   });
 
+  const focusStyles =
+    "focus:outline-none focus:border-primary focus:ring-2 focus:ring-secondary";
+
   return (
     <div ref={selectMenuNode}>
       <label
@@ -62,7 +65,7 @@ const SelectMenu: React.FC<SelectMenuProps> = ({ choices }) => {
           aria-haspopup="listbox"
           aria-expanded="true"
           aria-labelledby="listbox-label"
-          className="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className={`bg-white relative w-full border border-gray rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-pointer ${focusStyles} sm:text-sm`}
           onClick={() => setShowDropdown(!showDropdown)}
         >
           <span className="block truncate">
@@ -71,7 +74,20 @@ const SelectMenu: React.FC<SelectMenuProps> = ({ choices }) => {
           <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             {showDropdown ? (
               <svg
-                className="-mr-1 ml-2 h-5 w-5"
+                className="-mr-1 ml-2 h-5 w-5 fill-current text-text"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            ) : (
+              <svg
+                className="-mr-1 ml-2 h-5 w-5 fill-current text-text"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
@@ -83,24 +99,11 @@ const SelectMenu: React.FC<SelectMenuProps> = ({ choices }) => {
                   clip-rule="evenodd"
                 />
               </svg>
-            ) : (
-              <svg
-                className="-mr-1 ml-2 h-5 w-5"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
-                  clip-rule="evenodd"
-                />
-              </svg>
             )}
           </span>
         </button>
         {showDropdown && (
-          <div className="absolute mt-1 w-full rounded-md bg-white shadow-lg">
+          <div className="absolute mt-2 w-full rounded-md bg-white shadow-lg">
             <ul
               tabIndex={-1}
               role="listbox"

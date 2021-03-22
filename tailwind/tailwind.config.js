@@ -6,6 +6,9 @@ module.exports = {
       primary: "#3D74FF",
       secondary: "#B6CAFC",
       tertiary: "#E9EFFF",
+      gray: "#C1C9E0",
+      text: "#5A6786",
+      error: "#FF0000",
     },
   },
   variants: {
